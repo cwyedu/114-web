@@ -1,0 +1,88 @@
+/* 基本重設 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Microsoft JhengHei", Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+/* 導覽列 */
+nav {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+/* 英雄區塊 (Hero Section) */
+header {
+    background: #007bff;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    background: #ffc107;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* 技能區塊 */
+.skills {
+    margin-top: 20px;
+}
+
+.skills span {
+    background: #fff;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+/* 頁尾 */
+footer {
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 40px;
+    background: #ddd;
+}
