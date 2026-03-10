@@ -1,44 +1,88 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的個人首頁</title>
+    <title>114 Web Labs - 王大同</title>
+    <!-- 引用 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引用 Google 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <!-- 引用你的外部 CSS 檔案 -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="min-h-screen flex items-center justify-center p-6">
 
-    <nav>
-        <div class="container">
-            <h1>我的網頁111111</h1>
-            <ul>
-                <li><a href="#">首頁</a></li>
-                <li><a href="#">關於我</a></li>
-                <li><a href="#">作品集</a></li>
+    <!-- 裝飾小背景 -->
+    <div class="fixed top-10 left-10 text-4xl floating opacity-50">✨</div>
+    <div class="fixed bottom-20 right-10 text-4xl floating opacity-50" style="animation-delay: 1s;">🎨</div>
+    <div class="fixed top-1/4 right-20 text-3xl floating opacity-50" style="animation-delay: 1.5s;">🚀</div>
+
+    <div class="max-w-md w-full bg-white rounded-[2rem] cartoon-border p-8 md:p-10 relative overflow-hidden">
+        
+        <!-- 裝飾色塊 -->
+        <div class="absolute top-0 right-0 w-24 h-24 bg-yellow-200 rounded-bl-full -mr-10 -mt-10"></div>
+
+        <!-- 標題區域 -->
+        <header class="text-center mb-10 relative">
+            <h1 class="text-5xl font-black text-slate-900 mb-2 cartoon-font tracking-wider">
+                114 Web Labs
+            </h1>
+            <div class="inline-block bg-pink-400 text-white px-4 py-1 rounded-full cartoon-border text-lg font-bold rotate-[-2deg] mb-4">
+                王大同 的練習空間
+            </div>
+            <p class="text-slate-600 font-bold mt-2">✨ 每天進步一點點 ✨</p>
+        </header>
+
+        <!-- 連結區域 -->
+        <nav>
+            <ul class="space-y-6">
+                <!-- Lab 1 -->
+                <li>
+                    <a href="lab1/index.html" class="lab-card flex items-center p-4 bg-sky-100 rounded-2xl cartoon-border group">
+                        <div class="w-14 h-14 bg-white rounded-xl cartoon-border flex items-center justify-center font-black text-2xl mr-4 text-sky-500">
+                            01
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-black text-slate-800 text-xl cartoon-font">基礎 HTML</h2>
+                            <p class="text-sm text-slate-600 font-bold">蓋房子的骨架！</p>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- Lab 2 -->
+                <li>
+                    <a href="lab2/index.html" class="lab-card flex items-center p-4 bg-emerald-100 rounded-2xl cartoon-border group">
+                        <div class="w-14 h-14 bg-white rounded-xl cartoon-border flex items-center justify-center font-black text-2xl mr-4 text-emerald-500">
+                            02
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-black text-slate-800 text-xl cartoon-font">CSS 魔法</h2>
+                            <p class="text-sm text-slate-600 font-bold">給網站穿漂亮衣服</p>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- Lab 3 -->
+                <li>
+                    <a href="lab3/index.html" class="lab-card flex items-center p-4 bg-purple-100 rounded-2xl cartoon-border group">
+                        <div class="w-14 h-14 bg-white rounded-xl cartoon-border flex items-center justify-center font-black text-2xl mr-4 text-purple-500">
+                            03
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-black text-slate-800 text-xl cartoon-font">互動功能</h2>
+                            <p class="text-sm text-slate-600 font-bold">讓網頁動起來吧！</p>
+                        </div>
+                    </a>
+                </li>
             </ul>
-        </div>
-    </nav>
+        </nav>
 
-    <header>
-        <div class="hero">
-            <h2>你好，我是 [王大同]</h2>
-            <p>目前就讀於高職，正在學習網頁開發與設計。</p>
-            <button class="btn">聯絡我</button>
-        </div>
-    </header>
-
-    <section class="content container">
-        <h3>我的技能</h3>
-        <div class="skills">
-            <span>HTML5</span>
-            <span>CSS3</span>
-            <span>JavaScript</span>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Designed by Me.</p>
-    </footer>
+        <!-- 頁腳 -->
+        <footer class="mt-12 text-center text-slate-500 font-bold italic">
+            <p>Made with ❤️ by 王大同</p>
+        </footer>
+    </div>
 
 </body>
 </html>

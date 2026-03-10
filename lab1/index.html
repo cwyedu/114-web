@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸運大轉盤抽籤器</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #f43f5e;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", system-ui, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .input-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .wheel-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: none;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        /* 轉盤樣式 */
+        #wheelContainer {
+            position: relative;
+            width: 350px;
+            height: 350px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 指針 */
+        .pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid var(--secondary-color);
+            z-index: 10;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-align: center;
+            min-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 左側：輸入名單 -->
+        <div class="input-section">
+            <h1>🎡 幸運大轉盤</h1>
+            <textarea id="nameList" placeholder="請輸入名單，每行一個名字...&#10;小明&#10;小華&#10;小美&#10;小虎"></textarea>
+            <button id="spinBtn">開始轉動！</button>
+            <div id="result">準備好抽獎了嗎？</div>
+        </div>
+
+        <!-- 右側：轉盤顯示 -->
+        <div class="wheel-section">
+            <div id="wheelContainer">
+                <div class="pointer"></div>
+                <canvas id="wheelCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const nameListInput = document.getElementById('nameList');
+        const spinBtn = document.getElementById('spinBtn');
+        const resultDisplay = document.getElementById('result');
+
+        let names = [];
+        let currentRotation = 0;
+        let isSpinning = false;
+
+        // 設定畫布解析度
+        const size = 700; 
+        canvas.width = size;
+        canvas.height = size;
+
+        // 隨機顏色生成
+        const colors = ['#f87171', '#fb923c', '#fbbf24', '#4ade80', '#22d3ee', '#818cf8', '#c084fc', '#f472b6'];
+
+        function drawWheel() {
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const radius = size / 2 - 20;
+
+            ctx.clearRect(0, 0, size, size);
+
+            if (names.length === 0) {
+                // 空轉盤狀態
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = '#e2e8f0';
+                ctx.fill();
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.lineWidth = 5;
+                ctx.stroke();
+                return;
+            }
+
+            const arcSize = (2 * Math.PI) / names.length;
+
+            names.forEach((name, i) => {
+                const angle = i * arcSize + currentRotation;
+                
+                // 畫扇形
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, angle, angle + arcSize);
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+                ctx.stroke();
+
+                // 畫文字
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle + arcSize / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "white";
+                ctx.font = "bold 30px Arial";
+                ctx.fillText(name, radius - 30, 10);
+                ctx.restore();
+            });
+
+            // 中心裝飾圓
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function updateNames() {
+            names = nameListInput.value.split('\n')
+                .map(n => n.trim())
+                .filter(n => n !== "");
+            drawWheel();
+        }
+
+        function spin() {
+            if (isSpinning || names.length === 0) return;
+
+            isSpinning = true;
+            spinBtn.disabled = true;
+            resultDisplay.innerText = "旋轉中...";
+
+            const spinDuration = 3000; // 轉 3 秒
+            const startRotation = currentRotation;
+            const extraSpins = (Math.random() * 5 + 5) * 2 * Math.PI; // 隨機多轉 5-10 圈
+            const finalRotation = startRotation + extraSpins;
+            
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                
+                // 緩動函數 (Ease Out)
+                const easing = 1 - Math.pow(1 - progress, 3);
+                
+                currentRotation = startRotation + (extraSpins * easing);
+                drawWheel();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isSpinning = false;
+                    spinBtn.disabled = false;
+                    determineWinner();
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function determineWinner() {
+            // 計算指針指向哪一個（指針在正上方，即 -Math.PI / 2）
+            const arcSize = (2 * Math.PI) / names.length;
+            
+            // 由於指針在頂部(270度)，我們需要計算相對於該位置的旋轉角度
+            // 把 rotation 標準化到 0 ~ 2PI
+            const normalizedRotation = (currentRotation % (2 * Math.PI));
+            
+            // 指針相對轉盤的索引位置計算
+            // 頂部是 3π/2，扣除當前旋轉量
+            let winningIndex = Math.floor((1.5 * Math.PI - normalizedRotation) / arcSize) % names.length;
+            if (winningIndex < 0) winningIndex += names.length;
+
+            resultDisplay.innerText = `🎊 恭喜：${names[winningIndex]}！`;
+        }
+
+        // 監聽輸入與按鈕
+        nameListInput.addEventListener('input', updateNames);
+        spinBtn.addEventListener('click', spin);
+
+        // 初始化
+        updateNames();
+    </script>
+</body>
+</html>
