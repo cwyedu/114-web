@@ -1,0 +1,97 @@
+/* 全域設定：使用柔和的背景色模擬雪地 */
+body {
+    /* ... 原本的設定 ... */
+    background: linear-gradient(to bottom, #e6eff5 0%, #ffffff 100%);
+    min-height: 100vh;
+    overflow-x: hidden; /* 防止雪花晃動造成水平捲軸 */
+}
+body {
+    background-color: #f8fbfd; /* 極淺的冰藍色 */
+    background-image: radial-gradient(#ffffff 2px, transparent 2px);
+    background-size: 40px 40px; /* 隱約的雪花點綴感 */
+    color: #2c3e50; /* 深藍灰色，比純黑更有質感 */
+    font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 標題設定 */
+h1 {
+    font-size: 2.5rem;
+    letter-spacing: 5px;
+    color: #5d6d7e;
+    border-bottom: 2px solid #d6eaf8;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-weight: 300;
+    color: #aeb6bf;
+    margin-top: 20px;
+}
+
+/* 圖片容器與樣式：模擬相框感 */
+img {
+    max-width: 300px;
+    height: auto;
+    margin: 15px;
+    border: 8px solid #ffffff; /* 白色相片邊框 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 輕微陰影 */
+    transition: transform 0.3s ease;
+    border-radius: 2px;
+}
+
+img:hover {
+    transform: scale(1.05) rotate(1deg); /* 滑鼠懸停時微動 */
+    box-shadow: 0 8px 25px rgba(174, 182, 191, 0.3);
+}
+
+/* 文字描述區塊：雪中信箋感 */
+p {
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px); /* 毛玻璃效果 */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    margin-top: 30px;
+    font-style: italic;
+    color: #566573;
+}
+
+/* 水平線 */
+hr {
+    width: 60%;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #d6eaf8, transparent);
+    margin: 40px 0;
+}
+
+/* 超連結樣式 */
+a {
+    color: #85c1e9;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 5px 10px;
+}
+
+a:hover {
+    color: #3498db;
+    background-color: #ebf5fb;
+    border-radius: 5px;
+}
+
+/* 回首頁按鈕的特殊樣式 */
+a[href="../index.html"] {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}

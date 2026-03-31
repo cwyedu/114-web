@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab3：圖片與超連結頁面</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>我的作品集</h1>
+    <h2>攝影作品</h2>
+    <img src="p1.jpg" alt="側臉">
+    <img src="p2.jpg" alt="情侶">
+    <img src="p3.jpg" alt="隨便">
+    <p>Transform the provided couple photo into a vertical three-panel romantic snow scene, with each panel having an aspect ratio of 9:16. The male protagonist uses attached photo 1 (male's face); the female protagonist uses attached photo 2 (female's face).
+        Pan 1: Close-up of the male protagonist's right profile, framed on the left side of the generated image. He (Photo 1) looks directly into the distance, conveying an atmosphere of longing and cherishing.
+        Pan 2:The couple is situated in the center of a vast snowfield, surrounded by a dense pine forest, with a soft, overcast sky. The composition is a distant view, showing the male and female protagonists (Photo 1 and Photo 2) embracing from behind, sharing an umbrella and leaning against each other in the winter landscape.
+        Pan 3: Close-up of the female protagonist's (Photo 2) full face, conveying the strongest emotions. Her eyes are slightly moist, hiding memories and unspoken feelings.
+        把我的Q偶放進去
+    </p>
+    <hr>
+    <a href="https://youtu.be/EmeW6li6bbo?si=u354qNHXnVOaYru9" target="_blank">藍色情人節</a>
+    <br><br>
+    <a href="../index.html">回首頁</a>
+    <script>
+        function createSnow() {
+            // 創建一個 Canvas 畫布
+            const canvas = document.createElement('canvas');
+            document.body.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+    
+            // 設定畫布樣式，使其覆蓋全螢幕且不干擾點擊
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.pointerEvents = 'none'; // 讓滑鼠可以穿透雪花點擊按鈕
+            canvas.style.zIndex = '1000';
+    
+            let width, height, flakes;
+    
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                flakes = [];
+                for (let i = 0; i < 150; i++) { // 雪花數量
+                    flakes.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        r: Math.random() * 3 + 1, // 雪花半徑
+                        d: Math.random() * 1      // 飄落速度
+                    });
+                }
+            }
+    
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                ctx.beginPath();
+                for (let i = 0; i < flakes.length; i++) {
+                    const f = flakes[i];
+                    ctx.moveTo(f.x, f.y);
+                    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+                }
+                ctx.fill();
+                move();
+            }
+    
+            function move() {
+                for (let i = 0; i < flakes.length; i++) {
+                    const f = flakes[i];
+                    f.y += Math.pow(f.d, 2) + 1; // 垂直下落
+                    f.x += Math.sin(f.y / 30);    // 左右輕微晃動
+    
+                    // 如果雪花掉出螢幕，回到頂部
+                    if (f.y > height) {
+                        flakes[i] = { x: Math.random() * width, y: -10, r: f.r, d: f.d };
+                    }
+                }
+            }
+    
+            window.addEventListener('resize', resize);
+            resize();
+            
+            function animate() {
+                draw();
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    
+        // 啟動雪花
+        createSnow();
+    </script>
+</body>
+</html>
