@@ -1,0 +1,77 @@
+/* 全域設定 */
+body {
+    font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* 標題 */
+h1 {
+    text-align: center;
+    color: #5b7cfa;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #6c8cff;
+    margin-top: 30px;
+    border-left: 5px solid #a5b4fc;
+    padding-left: 10px;
+}
+
+/* 清單 */
+ul, ol {
+    background-color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+li {
+    margin: 8px 0;
+}
+
+/* 表格 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+th {
+    background-color: #a5b4fc;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* 表格斑馬紋 */
+tr:nth-child(even) {
+    background-color: #f1f5ff;
+}
+
+/* 連結按鈕 */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 16px;
+    background-color: #7c9cff;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+a:hover {
+    background-color: #5b7cfa;
+}
